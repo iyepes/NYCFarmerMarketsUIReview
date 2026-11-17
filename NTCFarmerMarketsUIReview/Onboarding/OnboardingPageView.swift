@@ -43,6 +43,10 @@ struct OnboardingPageView: View {
             .padding(.bottom, 24)
         }
         .scrollBounceBehavior(.basedOnSize)
+        // Leave room so content rests clear of the floating Skip and bottom controls,
+        // but can still scroll underneath them.
+        .contentMargins(.top, 48, for: .scrollContent)
+        .contentMargins(.bottom, 140, for: .scrollContent)
     }
 
     private var hero: some View {
