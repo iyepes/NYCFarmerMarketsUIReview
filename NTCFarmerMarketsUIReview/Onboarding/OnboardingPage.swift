@@ -6,6 +6,7 @@ struct OnboardingPage: Identifiable {
     let eyebrow: String      // small label above the title
     let emoji: String        // Halloween accent shown with the symbol
     let symbol: String       // SF Symbol
+    var heroImage: String? = nil   // asset name; replaces the symbol circle when set
     let title: String
     let message: String
     let bullets: [String]
@@ -16,6 +17,7 @@ struct OnboardingPage: Identifiable {
             eyebrow: "THE HAUNTING",
             emoji: "🦇",
             symbol: "shippingbox.fill",
+            heroImage: "AppLogo",
             title: "Your dinner has traveled farther than you have",
             message: "Big cities lean on big stores, and much of that food crosses a whole coast or an ocean before it reaches you. Meanwhile, small farms and family food makers lurk just around the corner, with no way to reach you.",
             bullets: [

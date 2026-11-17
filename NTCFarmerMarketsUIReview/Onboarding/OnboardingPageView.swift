@@ -47,19 +47,29 @@ struct OnboardingPageView: View {
 
     private var hero: some View {
         ZStack(alignment: .topTrailing) {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [Color.smPrimary, Color.smPrimary.opacity(0.15)],
-                        center: .center, startRadius: 10, endRadius: 100
+            if let heroImage = page.heroImage {
+                // The icon file has black corners baked in, so clip to its rounded shape.
+                Image(heroImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 180, height: 180)
+                    .clipShape(RoundedRectangle(cornerRadius: 46, style: .continuous))
+                    .shadow(color: Color.smSecondary.opacity(0.5), radius: 24)
+            } else {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.smPrimary, Color.smPrimary.opacity(0.15)],
+                            center: .center, startRadius: 10, endRadius: 100
+                        )
                     )
-                )
-                .frame(width: 180, height: 180)
-                .overlay {
-                    Image(systemName: page.symbol)
-                        .font(.system(size: 72))
-                        .foregroundStyle(Color.smDeep)
-                }
+                    .frame(width: 180, height: 180)
+                    .overlay {
+                        Image(systemName: page.symbol)
+                            .font(.system(size: 72))
+                            .foregroundStyle(Color.smDeep)
+                    }
+            }
 
             Text(page.emoji)
                 .font(.system(size: 44))
