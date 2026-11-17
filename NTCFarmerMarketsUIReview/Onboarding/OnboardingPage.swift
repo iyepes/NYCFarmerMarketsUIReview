@@ -26,7 +26,7 @@ struct OnboardingPage: Identifiable {
             symbol: "shippingbox.fill",
             heroImage: "pirate-ship",
             title: "Your dinner has traveled farther than you have",
-            message: "Big cities lean on big stores, and much of that food crosses a whole coast or an ocean before it reaches you. Meanwhile, small farms and family food makers lurk just around the corner, with no way to reach you.",
+            message: "Big cities lean on big stores, and much of that food crosses coast to coast or travel an ocean before it reaches you. Meanwhile, small farms and family food makers lurk just around the corner, with no way to reach you.",
             bullets: [
                 "Your groceries rack up frequent-flyer miles",
                 "Local growers are locked out of the big channels",
@@ -55,7 +55,7 @@ struct OnboardingPage: Identifiable {
             symbol: "person.2.fill",
             heroImage: "dairy-products-pallete",
             title: "Neighbors and growers, come on in",
-            message: "Hungry for fresher food close to home? Or do you grow and make it yourself? Spooky Markets brings you together, no scary middlemen required.",
+            message: "Hungry for fresher food close to home? Or existent farmers who bring their products? Spooky Markets brings you together, no scary middlemen required.",
             bullets: [
                 "New Yorkers who crave fresh, local food",
                 "Farmers and family food businesses",

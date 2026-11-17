@@ -3,13 +3,13 @@ import SwiftUI
 struct OnboardingPageView: View {
     let page: OnboardingPage
     /// Space to keep clear at the top (safe area + Skip button) before content rests.
-    var topInset: CGFloat = 48
+    var topInset: CGFloat = 1
     /// Space to keep clear at the bottom (safe area + glass controls).
     var bottomInset: CGFloat = 150
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 12) {
                 hero
 
                 Text(page.eyebrow)
@@ -29,7 +29,7 @@ struct OnboardingPageView: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(page.bullets, id: \.self) { bullet in
-                        HStack(alignment: .top, spacing: 12) {
+                        HStack(alignment: .top, spacing: 8) {
                             Image(systemName: "moon.stars.fill")
                                 .foregroundStyle(AppPalette.accentSecondary.color)
                                 .accessibilityHidden(true)
