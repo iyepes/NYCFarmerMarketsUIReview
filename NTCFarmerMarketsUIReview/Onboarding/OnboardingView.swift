@@ -15,40 +15,58 @@ struct OnboardingView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                HStack {
-                    Spacer()
-                    Button("Skip") { finish() }
-                        .foregroundStyle(Color.smSurface)
-                        .opacity(isLast ? 0 : 1)
-                        .disabled(isLast)
+            // Pages use the full height. Content scrolls underneath the glass controls.
+            TabView(selection: $selection) {
+                ForEach(pages) { page in
+                    OnboardingPageView(page: page).tag(page.id)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 8)
-                .frame(height: 44)
-
-                TabView(selection: $selection) {
-                    ForEach(pages) { page in
-                        OnboardingPageView(page: page).tag(page.id)
-                    }
-                }
-                .tabViewStyle(.page(indexDisplayMode: .always))
-                .indexViewStyle(.page(backgroundDisplayMode: .never))
-
-                Button(action: advance) {
-                    Text(isLast ? "Enter the market" : "Next")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Color.smSecondary, in: Capsule())
-                        // Deep-on-orange keeps contrast readable; white on this orange is weak.
-                        .foregroundStyle(Color.smDeep)
-                }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 24)
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .ignoresSafeArea(edges: .bottom)
         }
+        .overlay(alignment: .topTrailing) { skipButton }
+        .overlay(alignment: .bottom) { bottomControls }
         .preferredColorScheme(.dark)
+    }
+
+    private var skipButton: some View {
+        Button("Skip") { finish() }
+            .buttonStyle(.glass)
+            .foregroundStyle(Color.smSurface)
+            .padding(.horizontal, 24)
+            .opacity(isLast ? 0 : 1)
+            .disabled(isLast)
+    }
+
+    private var bottomControls: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                ForEach(pages) { page in
+                    Circle()
+                        .fill(page.id == selection ? Color.smHighlight : Color.white.opacity(0.4))
+                        .frame(width: 8, height: 8)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .glassEffect(.regular, in: .capsule)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Page \(selection + 1) of \(pages.count)")
+
+            Button(action: advance) {
+                Text(isLast ? "Enter the market" : "Next")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    // Deep-on-orange keeps contrast readable; white on this orange is weak.
+                    .foregroundStyle(Color.smDeep)
+            }
+            .buttonStyle(.glassProminent)
+            .tint(Color.smSecondary)
+            .controlSize(.large)
+        }
+        .padding(.horizontal, 24)
+        .padding(.bottom, 8)
     }
 
     private func advance() {
