@@ -8,27 +8,42 @@ struct OnboardingView: View {
     private var isLast: Bool { selection == pages.count - 1 }
 
     var body: some View {
-        ZStack {
-            AppPalette.background.color
-                .ignoresSafeArea()
+        // Read the safe area here, then let the pages ignore it so they run edge to edge.
+        // Each page adds the insets back as scroll margins, so text rests clear of the
+        // status bar and controls but scrolls underneath them.
+        GeometryReader { proxy in
+            ZStack {
+                AppPalette.background.color
+                    .ignoresSafeArea()
 
-            // Pages use the full height. Content scrolls underneath the glass controls.
-            TabView(selection: $selection) {
-                ForEach(pages) { page in
-                    OnboardingPageView(page: page).tag(page.id)
+                TabView(selection: $selection) {
+                    ForEach(pages) { page in
+                        OnboardingPageView(
+                            page: page,
+                            topInset: proxy.safeAreaInsets.top + Layout.skipAreaHeight,
+                            bottomInset: proxy.safeAreaInsets.bottom + Layout.controlsAreaHeight
+                        )
+                        .tag(page.id)
+                    }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .ignoresSafeArea()
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .ignoresSafeArea(edges: .bottom)
+            .overlay(alignment: .topTrailing) { skipButton }
+            .overlay(alignment: .bottom) { bottomControls }
         }
-        .overlay(alignment: .topTrailing) { skipButton }
-        .overlay(alignment: .bottom) { bottomControls }
+    }
+
+    private enum Layout {
+        static let skipAreaHeight: CGFloat = 56
+        static let controlsAreaHeight: CGFloat = 150
     }
 
     private var skipButton: some View {
         Button("Skip") { finish() }
             .appFont(.body)
             .buttonStyle(.glass)
+            .padding(.top, 8)
             .foregroundStyle(AppPalette.textPrimary.color)
             .padding(.horizontal, 24)
             .opacity(isLast ? 0 : 1)
@@ -50,16 +65,19 @@ struct OnboardingView: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Page \(selection + 1) of \(pages.count)")
 
+            // Tinted, translucent glass so the page shows through (glassProminent is nearly opaque).
             Button(action: advance) {
                 Text(isLast ? "Enter the market" : "Next")
                     .appFont(.bodyEmphasis)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 16)
                     .foregroundStyle(AppPalette.onAccentFill.color)
+                    .glassEffect(
+                        .regular.tint(AppPalette.accentFill.color.opacity(0.75)).interactive(),
+                        in: .capsule
+                    )
             }
-            .buttonStyle(.glassProminent)
-            .tint(AppPalette.accentFill.color)
-            .controlSize(.large)
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 24)
         .padding(.bottom, 8)
