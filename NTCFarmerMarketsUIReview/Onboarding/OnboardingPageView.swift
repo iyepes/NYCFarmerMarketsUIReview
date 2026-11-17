@@ -48,13 +48,29 @@ struct OnboardingPageView: View {
     private var hero: some View {
         ZStack(alignment: .topTrailing) {
             if let heroImage = page.heroImage {
-                // The icon file has black corners baked in, so clip to its rounded shape.
-                Image(heroImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 180, height: 180)
-                    .clipShape(RoundedRectangle(cornerRadius: 46, style: .continuous))
-                    .shadow(color: Color.smSecondary.opacity(0.5), radius: 24)
+                switch page.heroStyle {
+                case .illustration:
+                    // Light circle keeps the dark purple parts of the art visible on the deep background.
+                    Circle()
+                        .fill(Color.smSurface)
+                        .frame(width: 220, height: 220)
+                        .overlay {
+                            Image(heroImage)
+                                .resizable()
+                                .scaledToFit()
+                                .padding(20)
+                        }
+                case .framed:
+                    Image(heroImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 220, height: 220)
+                        .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 32, style: .continuous)
+                                .strokeBorder(Color.smHighlight, lineWidth: 3)
+                        }
+                }
             } else {
                 Circle()
                     .fill(
