@@ -1,7 +1,14 @@
+//
+//  NTCFarmerMarketsUIReviewApp.swift
+//  NTCFarmerMarketsUIReview
+//
+//  Created by Isabel Yepes on 16/11/26.
+//
+
 import SwiftUI
 
 @main
-struct SpookyMarketsApp: App {
+struct NTCFarmerMarketsUIReviewApp: App {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
 
     var body: some Scene {
