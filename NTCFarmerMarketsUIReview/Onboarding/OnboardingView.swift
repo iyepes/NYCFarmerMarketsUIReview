@@ -9,11 +9,8 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color.smDeep, Color.smDeep.opacity(0.85)],
-                startPoint: .top, endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            AppPalette.background.color
+                .ignoresSafeArea()
 
             // Pages use the full height. Content scrolls underneath the glass controls.
             TabView(selection: $selection) {
@@ -26,14 +23,13 @@ struct OnboardingView: View {
         }
         .overlay(alignment: .topTrailing) { skipButton }
         .overlay(alignment: .bottom) { bottomControls }
-        .preferredColorScheme(.dark)
     }
 
     private var skipButton: some View {
         Button("Skip") { finish() }
             .appFont(.body)
             .buttonStyle(.glass)
-            .foregroundStyle(Color.smSurface)
+            .foregroundStyle(AppPalette.textPrimary.color)
             .padding(.horizontal, 24)
             .opacity(isLast ? 0 : 1)
             .disabled(isLast)
@@ -44,7 +40,7 @@ struct OnboardingView: View {
             HStack(spacing: 8) {
                 ForEach(pages) { page in
                     Circle()
-                        .fill(page.id == selection ? Color.smHighlight : Color.white.opacity(0.4))
+                        .fill(page.id == selection ? AppPalette.accent.color : AppPalette.textPrimary.color.opacity(0.4))
                         .frame(width: 8, height: 8)
                 }
             }
@@ -59,11 +55,10 @@ struct OnboardingView: View {
                     .appFont(.bodyEmphasis)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
-                    // Deep-on-orange keeps contrast readable; white on this orange is weak.
-                    .foregroundStyle(Color.smDeep)
+                    .foregroundStyle(AppPalette.onAccentFill.color)
             }
             .buttonStyle(.glassProminent)
-            .tint(Color.smSecondary)
+            .tint(AppPalette.accentFill.color)
             .controlSize(.large)
         }
         .padding(.horizontal, 24)
