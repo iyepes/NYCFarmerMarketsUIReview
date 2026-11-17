@@ -11,6 +11,10 @@ import SwiftUI
 struct NTCFarmerMarketsUIReviewApp: App {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
 
+    init() {
+        AppTypography.registerFonts()
+    }
+
     var body: some Scene {
         WindowGroup {
             if hasSeenOnboarding {

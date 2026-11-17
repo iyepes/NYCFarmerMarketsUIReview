@@ -10,17 +10,17 @@ struct OnboardingPageView: View {
                     .padding(.top, 32)
 
                 Text(page.eyebrow)
-                    .font(.caption.weight(.bold))
+                    .appFont(.footnote)
                     .tracking(2)
                     .foregroundStyle(Color.smHighlight)
 
                 Text(page.title)
-                    .font(.system(.largeTitle, design: .serif).weight(.bold))
+                    .appFont(.detailTitle)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white)
 
                 Text(page.message)
-                    .font(.body)
+                    .appFont(.body)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.smSurface)
 
@@ -31,6 +31,7 @@ struct OnboardingPageView: View {
                                 .foregroundStyle(Color.smHighlight)
                                 .accessibilityHidden(true)
                             Text(bullet)
+                                .appFont(.body)
                                 .foregroundStyle(.white)
                         }
                     }
