@@ -35,7 +35,8 @@ struct OnboardingView: View {
     }
 
     private enum Layout {
-        static let skipAreaHeight: CGFloat = 56
+        // Skip button height (about 34 pt) plus its 8 pt top padding, with a small gap.
+        static let skipAreaHeight: CGFloat = 48
         static let controlsAreaHeight: CGFloat = 150
     }
 

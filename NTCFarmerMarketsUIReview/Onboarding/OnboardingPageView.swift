@@ -3,7 +3,7 @@ import SwiftUI
 struct OnboardingPageView: View {
     let page: OnboardingPage
     /// Space to keep clear at the top (safe area + Skip button) before content rests.
-    var topInset: CGFloat = 56
+    var topInset: CGFloat = 48
     /// Space to keep clear at the bottom (safe area + glass controls).
     var bottomInset: CGFloat = 150
 
@@ -11,7 +11,6 @@ struct OnboardingPageView: View {
         ScrollView {
             VStack(spacing: 24) {
                 hero
-                    .padding(.top, 16)
 
                 Text(page.eyebrow)
                     .appFont(.footnote)
