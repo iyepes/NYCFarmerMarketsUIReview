@@ -12,33 +12,33 @@ struct OnboardingPageView: View {
                 Text(page.eyebrow)
                     .appFont(.footnote)
                     .tracking(2)
-                    .foregroundStyle(Color.smHighlight)
+                    .foregroundStyle(AppPalette.textSecondary.color)
 
                 Text(page.title)
                     .appFont(.detailTitle)
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(AppPalette.textPrimary.color)
 
                 Text(page.message)
                     .appFont(.body)
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(Color.smSurface)
+                    .foregroundStyle(AppPalette.textPrimary.color)
 
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(page.bullets, id: \.self) { bullet in
                         HStack(alignment: .top, spacing: 12) {
                             Image(systemName: "moon.stars.fill")
-                                .foregroundStyle(Color.smHighlight)
+                                .foregroundStyle(AppPalette.accentSecondary.color)
                                 .accessibilityHidden(true)
                             Text(bullet)
                                 .appFont(.body)
-                                .foregroundStyle(.white)
+                                .foregroundStyle(AppPalette.textPrimary.color)
                         }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(16)
-                .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
+                .background(AppPalette.card.color, in: RoundedRectangle(cornerRadius: 16))
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
@@ -55,9 +55,9 @@ struct OnboardingPageView: View {
             if let heroImage = page.heroImage {
                 switch page.heroStyle {
                 case .illustration:
-                    // Light circle keeps the dark purple parts of the art visible on the deep background.
+                    // Lavender circle keeps the dark purple parts of the art visible in both appearances.
                     Circle()
-                        .fill(Color.smSurface)
+                        .fill(AppPalette.accentFill.color)
                         .frame(width: 220, height: 220)
                         .overlay {
                             Image(heroImage)
@@ -73,14 +73,14 @@ struct OnboardingPageView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
                         .overlay {
                             RoundedRectangle(cornerRadius: 32, style: .continuous)
-                                .strokeBorder(Color.smHighlight, lineWidth: 3)
+                                .strokeBorder(AppPalette.accentSecondary.color, lineWidth: 3)
                         }
                 }
             } else {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [Color.smPrimary, Color.smPrimary.opacity(0.15)],
+                            colors: [AppPalette.accentFill.color, AppPalette.accentFill.color.opacity(0.15)],
                             center: .center, startRadius: 10, endRadius: 100
                         )
                     )
@@ -88,7 +88,7 @@ struct OnboardingPageView: View {
                     .overlay {
                         Image(systemName: page.symbol)
                             .font(.system(size: 72))
-                            .foregroundStyle(Color.smDeep)
+                            .foregroundStyle(AppPalette.onAccentFill.color)
                     }
             }
 
@@ -101,7 +101,7 @@ struct OnboardingPageView: View {
 
 #Preview {
     ZStack {
-        Color.smDeep.ignoresSafeArea()
+        AppPalette.background.color.ignoresSafeArea()
         OnboardingPageView(page: OnboardingPage.all[0])
     }
 }
