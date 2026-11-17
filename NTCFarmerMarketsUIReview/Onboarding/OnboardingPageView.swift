@@ -2,12 +2,16 @@ import SwiftUI
 
 struct OnboardingPageView: View {
     let page: OnboardingPage
+    /// Space to keep clear at the top (safe area + Skip button) before content rests.
+    var topInset: CGFloat = 56
+    /// Space to keep clear at the bottom (safe area + glass controls).
+    var bottomInset: CGFloat = 150
 
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 hero
-                    .padding(.top, 32)
+                    .padding(.top, 16)
 
                 Text(page.eyebrow)
                     .appFont(.footnote)
@@ -46,8 +50,10 @@ struct OnboardingPageView: View {
         .scrollBounceBehavior(.basedOnSize)
         // Leave room so content rests clear of the floating Skip and bottom controls,
         // but can still scroll underneath them.
-        .contentMargins(.top, 48, for: .scrollContent)
-        .contentMargins(.bottom, 140, for: .scrollContent)
+        .contentMargins(.top, topInset, for: .scrollContent)
+        .contentMargins(.bottom, bottomInset, for: .scrollContent)
+        // Soft fade where content passes under the glass controls.
+        .scrollEdgeEffectStyle(.soft, for: [.top, .bottom])
     }
 
     private var hero: some View {
