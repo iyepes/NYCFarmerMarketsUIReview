@@ -31,6 +31,7 @@ struct OnboardingView: View {
 
     private var skipButton: some View {
         Button("Skip") { finish() }
+            .appFont(.body)
             .buttonStyle(.glass)
             .foregroundStyle(Color.smSurface)
             .padding(.horizontal, 24)
@@ -55,7 +56,7 @@ struct OnboardingView: View {
 
             Button(action: advance) {
                 Text(isLast ? "Enter the market" : "Next")
-                    .font(.headline)
+                    .appFont(.bodyEmphasis)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
                     // Deep-on-orange keeps contrast readable; white on this orange is weak.
